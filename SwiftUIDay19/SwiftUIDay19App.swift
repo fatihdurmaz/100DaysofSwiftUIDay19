@@ -11,7 +11,7 @@ import SwiftUI
 struct SwiftUIDay19App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Version3View() // Başlangıç View'ini değiştirmek için burayı kullanabilirsiniz.
         }
     }
 }

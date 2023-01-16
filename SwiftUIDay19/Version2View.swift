@@ -7,49 +7,20 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @State private var deger = 100.0
-    @State private var girisBirimi = "Metre"
-    @State private var cikisBirimi = "Kilometre"
+struct Version2View: View {
+    @State private var deger = 10.0
+    @State private var girisBirimi = UnitLength.meters
+    @State private var cikisBirimi = UnitLength.kilometers
     @FocusState private var klavyeGizle: Bool
     
-    let birimler = ["Fet", "Kilometre", "Metre", "Mil", "Yarda"]
+    let formatter: MeasurementFormatter
+    
+    let birimler : [UnitLength] = [.feet, .kilometers, .meters, .miles, .yards]
     
     var sonuc: String {
-        let girisCarpani: Double
-        let cikisCarpani: Double
-        
-        switch girisBirimi {
-        case "Fet":
-            girisCarpani = 0.3048
-        case "Kilometre":
-            girisCarpani = 1000
-        case "Mil":
-            girisCarpani = 1609.34
-        case "Yarda":
-            girisCarpani = 0.9144
-        default:
-            girisCarpani = 1.0
-        }
-        
-        switch cikisBirimi {
-        case "Fet":
-            cikisCarpani = 3.28084
-        case "Kilometre":
-            cikisCarpani = 0.001
-        case "Mil":
-            cikisCarpani = 0.000621371
-        case "Yarda":
-            cikisCarpani = 1.09361
-        default:
-            cikisCarpani = 1.0
-        }
-        
-        let girilenOlcuBirimi = deger * girisCarpani
-        let sonuc = girilenOlcuBirimi * cikisCarpani
-        
-        let sonucString = sonuc.formatted()
-        return "\(sonucString) \(cikisBirimi.lowercased())"
+        let girisBirimTuru = Measurement(value: deger, unit: girisBirimi)
+        let cikisBirimTuru = girisBirimTuru.converted(to: cikisBirimi)
+        return formatter.string(from: cikisBirimTuru)
     }
     var body: some View {
         NavigationView{
@@ -64,13 +35,13 @@ struct ContentView: View {
                 Section{
                     Picker("Giriş Birimi Seçiniz", selection: $girisBirimi) {
                         ForEach(birimler, id: \.self){
-                            Text($0)
+                            Text(formatter.string(from: $0).capitalized)
                         }
                     }
                     
                     Picker("Çıkış Birimi Seçiniz", selection: $cikisBirimi) {
                         ForEach(birimler, id: \.self){
-                            Text($0)
+                            Text(formatter.string(from: $0).capitalized)
                         }
                     }
                 }
@@ -80,7 +51,7 @@ struct ContentView: View {
                     Text("Sonuç")
                 }
             }
-            .navigationTitle("Birim Çevirici v1")
+            .navigationTitle("Birim Çevirici v2")
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
@@ -92,10 +63,17 @@ struct ContentView: View {
             }
         }
     }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    
+    init() {
+        formatter = MeasurementFormatter()
+        formatter.unitOptions = .providedUnit
+        formatter.unitStyle = .long
     }
 }
+
+struct Version2View_Previews: PreviewProvider {
+    static var previews: some View {
+        Version2View()
+    }
+}
+
