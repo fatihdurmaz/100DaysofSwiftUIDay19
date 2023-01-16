@@ -24,6 +24,7 @@ struct Version3View: View {
         [UnitMass.grams, UnitMass.kilograms, UnitMass.ounces, UnitMass.pounds],
         [UnitTemperature.celsius, UnitTemperature.fahrenheit, UnitTemperature.kelvin],
         [UnitDuration.hours, UnitDuration.minutes, UnitDuration.seconds]
+
     ]
     var sonuc: String {
         let girisBirimTuru = Measurement(value: deger, unit: girisBirimi)
@@ -51,12 +52,14 @@ struct Version3View: View {
                         ForEach(birimler[secilenBirim], id: \.self) {
                             Text(formatter.string(from: $0).capitalized)
                         }
+                        // ceviriciler dizisinin indis numarasına göre birimler dizisinin elemanlarını pickerlarda gösteriyoruz.
                     }
                     
                     Picker("Çıkış Birimi Seçiniz", selection: $cikisBirimi) {
                         ForEach(birimler[secilenBirim], id: \.self) {
                             Text(formatter.string(from: $0).capitalized)
                         }
+                        // ceviriciler dizisinin indis numarasına göre birimler dizisinin elemanlarını pickerlarda gösteriyoruz.
                     }
                 }
                 Section{
@@ -79,6 +82,8 @@ struct Version3View: View {
                 let birim = birimler[newSelection]
                 girisBirimi = birim[0]
                 cikisBirimi = birim[1]
+                // ölçü birimi her değiştiğinde pickerları ilgili birimin elemanları ile dolduruyoruz.
+                
             }
         }
     }

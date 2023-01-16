@@ -4,7 +4,7 @@
 //
 //  Created by Fatih Durmaz on 16.01.2023.
 //
-
+// Diğer ekranlar için SwiftUIDay19App dosyasına bakın.
 import SwiftUI
 
 struct ContentView: View {
