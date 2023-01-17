@@ -59,7 +59,7 @@ struct Version3View: View {
                         ForEach(birimler[secilenBirim], id: \.self) {
                             Text(formatter.string(from: $0).capitalized)
                         }
-                        // ceviriciler dizisinin indis numarasına göre birimler dizisinin elemanlarını pickerlarda gösteriyoruz.
+                        // çeviriciler dizisinin indis numarasına göre birimler dizisinin elemanlarını pickerlarda gösteriyoruz.
                     }
                 }
                 Section{
@@ -82,7 +82,7 @@ struct Version3View: View {
                 let birim = birimler[newSelection]
                 girisBirimi = birim[0]
                 cikisBirimi = birim[1]
-                // ölçü birimi her değiştiğinde pickerları ilgili birimin elemanları ile dolduruyoruz.
+                // ölçü birimi her değiştiğinde pickerları ilgili birimin 1. ve 2. elemanları ile dolduruyoruz.
                 
             }
         }
